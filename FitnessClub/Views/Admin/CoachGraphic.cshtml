@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "CoachGraphic";
+}
+
+<html>
+<head>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/Chart.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        #chart_container {
+            width: 1000px;
+            height: 500px;
+            border: 1px solid #000000;
+            padding: 1px;
+            border-radius: 4px;
+            align-content: center;
+            /*margin-top:2%;*/
+        }
+
+        /*#first {
+            background-color: #4B4D65;
+        }*/
+
+        .section {
+            padding: 10px;
+            padding-left: 40px;
+        }
+
+            .section input[type="radio"],
+            .section input[type="checkbox"] {
+                display: none;
+            }
+
+        .container {
+            margin-bottom: 10px;
+        }
+
+            .container label {
+                position: relative;
+            }
+
+            /* Base styles for spans */
+            .container span::before,
+            .container span::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+            }
+
+            /* Radio buttons */
+            .container span.radio:hover {
+                cursor: pointer;
+            }
+
+            .container span.radio::before {
+                left: -52px;
+                width: 45px;
+                height: 25px;
+                background-color: #696969;
+                border-radius: 50px;
+            }
+
+            .container span.radio::after {
+                left: -49px;
+                width: 17px;
+                height: 17px;
+                border-radius: 10px;
+                /*border-color: Gainsboro;*/
+                background-color: #FFFFFF;
+                transition: left .5s, background-color .25s;
+            }
+
+        input[type="radio"]:checked + label span.radio::after {
+            left: -27px;
+            background-color: #808080;
+            border: 2px solid LightGray;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="get" style="margin-top: 1%">
+        <select name="month" class="form-control" id="sel" style="font-size:large; margin-top:25px;">
+            <option>Январь</option>
+            <option>Февраль</option>
+            <option>Март</option>
+            <option>Апрель</option>
+            <option>Май</option>
+            <option>Июнь</option>
+            <option>Июль</option>
+            <option>Август</option>
+            <option>Сентябрь</option>
+            <option>Ноябрь</option>
+            <option>Декабрь</option>
+        </select>
+    </form>
+
+
+
+    <section id="first" class="section">
+        <div class="container">
+            <input type="radio" name="typeGraph" id="line" checked>
+            <label for="line"><span class="radio">Line</span></label>
+        </div>
+        <div class="container">
+            <input type="radio" name="typeGraph" id="bar">
+            <label for="bar"><span class="radio">Bar</span></label>
+        </div>
+        <div class="container">
+            <input type="radio" name="typeGraph" id="pie">
+            <label for="pie"><span class="radio">Pie</span></label>
+        </div>
+    </section>
+
+
+    @*<div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" name="typeGraph" id="line" value="line" checked>
+            <label class="custom-control-label" for="line">Line</label>
+        </div>
+
+        <input class="form-check-input" type="radio" name="typeGraph" id="bar" value="bar">
+        <label class="form-check-label" for="bar">Bar</label>*@
+    <div id="chart_container">
+        <canvas id="bar_chart"></canvas>
+    </div>
+    
+
+    <script>
+           var h = @Html.Raw(Json.Encode(ViewBag.COSTS));
+        var w = @Html.Raw(Json.Encode(ViewBag.COACHES));
+
+            var ctx = document.getElementById('bar_chart').getContext('2d');
+        var config = {
+            type: "line",
+            data: {
+                labels: w,
+                datasets: [{
+                    label: "Выручка",
+                    data: h,
+                   backgroundColor: 'rgb(255,255,255,1.0)',
+
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+            }
+        };
+        //}
+
+
+        var temp = jQuery.extend(true, {}, config);
+        var myChart = new Chart(ctx, temp);
+
+        $("#line").click(function () {
+            change('line');
+        });
+
+        $("#bar").click(function () {
+            change('bar');
+        });
+
+        $("#pie").click(function () {
+            change('pie');
+        });
+
+        function change(newType) {
+            var ctx = document.getElementById("bar_chart").getContext("2d");
+
+            // Remove the old chart and all its event handles
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            // Chart.js modifies the object you pass in. Pass a copy of the object so we can use the original object later
+            var temp = jQuery.extend(true, {}, config);
+            temp.type = newType;
+            myChart = new Chart(ctx, temp);
+        };
+
+        $('#sel').on('change', function () {
+            $(this.form).submit();
+        });
+
+        const select = document.querySelector('select').getElementsByTagName('option');
+        for (let i = 0; i < select.length; i++) {
+            if (i === @ViewBag.NUMMONTH) select[i].selected = true;
+        }
+    </script>
+
+</body>
+
+</html>

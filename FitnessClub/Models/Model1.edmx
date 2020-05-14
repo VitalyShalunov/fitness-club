@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище FitnessClubModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCoach" Type="int" Nullable="false" />
+          <Property Name="idService" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sex" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="birthday" Type="datetime" Nullable="false" />
+          <Property Name="totalVisiting" Type="int" />
+        </EntityType>
+        <EntityType Name="Coach">
+          <Key>
+            <PropertyRef Name="idCoach" />
+          </Key>
+          <Property Name="idCoach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="experience" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SeasonTicket">
+          <Key>
+            <PropertyRef Name="idSeasonTicket" />
+          </Key>
+          <Property Name="idSeasonTicket" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idService" Type="int" />
+          <Property Name="idClient" Type="int" />
+          <Property Name="idCoach" Type="int" />
+          <Property Name="classesTotal" Type="int" Nullable="false" />
+          <Property Name="classesLeft" Type="int" />
+          <Property Name="dateStart" Type="date" Nullable="false" />
+          <Property Name="dateEnd" Type="date" Nullable="false" />
+          <Property Name="saleClasses" Type="int" />
+          <Property Name="saleAge" Type="int" />
+          <Property Name="saleСonstantСlient" Type="int" />
+          <Property Name="totalCost" Type="real" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="idService" />
+          </Key>
+          <Property Name="idService" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cost" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Visiting">
+          <Key>
+            <PropertyRef Name="idVisiting" />
+          </Key>
+          <Property Name="idVisiting" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idSeasonTicket" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Record_Coach">
+          <End Role="Coach" Type="Self.Coach" Multiplicity="1" />
+          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coach">
+              <PropertyRef Name="idCoach" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="idCoach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="idService" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="idService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeasonTicket_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="SeasonTicket" Type="Self.SeasonTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="idClient" />
+            </Principal>
+            <Dependent Role="SeasonTicket">
+              <PropertyRef Name="idClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeasonTicket_Coach">
+          <End Role="Coach" Type="Self.Coach" Multiplicity="0..1" />
+          <End Role="SeasonTicket" Type="Self.SeasonTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coach">
+              <PropertyRef Name="idCoach" />
+            </Principal>
+            <Dependent Role="SeasonTicket">
+              <PropertyRef Name="idCoach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeasonTicket_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="SeasonTicket" Type="Self.SeasonTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="idService" />
+            </Principal>
+            <Dependent Role="SeasonTicket">
+              <PropertyRef Name="idService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visiting_SeasonTicket">
+          <End Role="SeasonTicket" Type="Self.SeasonTicket" Multiplicity="1" />
+          <End Role="Visiting" Type="Self.Visiting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SeasonTicket">
+              <PropertyRef Name="idSeasonTicket" />
+            </Principal>
+            <Dependent Role="Visiting">
+              <PropertyRef Name="idSeasonTicket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ClientInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Client" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Trainer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Coach" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище FitnessClubModelContainer">
+          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Coach" EntityType="Self.Coach" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeasonTicket" EntityType="Self.SeasonTicket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visiting" EntityType="Self.Visiting" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Record_Coach" Association="Self.FK_Record_Coach">
+            <End Role="Coach" EntitySet="Coach" />
+            <End Role="Activity" EntitySet="Activity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Service" Association="Self.FK_Record_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Activity" EntitySet="Activity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeasonTicket_Client" Association="Self.FK_SeasonTicket_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="SeasonTicket" EntitySet="SeasonTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeasonTicket_Coach" Association="Self.FK_SeasonTicket_Coach">
+            <End Role="Coach" EntitySet="Coach" />
+            <End Role="SeasonTicket" EntitySet="SeasonTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeasonTicket_Service" Association="Self.FK_SeasonTicket_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="SeasonTicket" EntitySet="SeasonTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visiting_SeasonTicket" Association="Self.FK_Visiting_SeasonTicket">
+            <End Role="SeasonTicket" EntitySet="SeasonTicket" />
+            <End Role="Visiting" EntitySet="Visiting" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FitnessClubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCoach" Type="Int32" Nullable="false" />
+          <Property Name="idService" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Coach" Relationship="Self.FK_Record_Coach" FromRole="Activity" ToRole="Coach" />
+          <NavigationProperty Name="Service" Relationship="Self.FK_Record_Service" FromRole="Activity" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sex" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="totalVisiting" Type="Int32" />
+          <NavigationProperty Name="SeasonTickets" Relationship="Self.FK_SeasonTicket_Client" FromRole="Client" ToRole="SeasonTicket" />
+        </EntityType>
+        <EntityType Name="Coach">
+          <Key>
+            <PropertyRef Name="idCoach" />
+          </Key>
+          <Property Name="idCoach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="experience" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Activities" Relationship="Self.FK_Record_Coach" FromRole="Coach" ToRole="Activity" />
+          <NavigationProperty Name="SeasonTickets" Relationship="Self.FK_SeasonTicket_Coach" FromRole="Coach" ToRole="SeasonTicket" />
+        </EntityType>
+        <EntityType Name="SeasonTicket">
+          <Key>
+            <PropertyRef Name="idSeasonTicket" />
+          </Key>
+          <Property Name="idSeasonTicket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idService" Type="Int32" />
+          <Property Name="idClient" Type="Int32" />
+          <Property Name="idCoach" Type="Int32" />
+          <Property Name="classesTotal" Type="Int32" Nullable="false" />
+          <Property Name="classesLeft" Type="Int32" />
+          <Property Name="dateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dateEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="saleClasses" Type="Int32" />
+          <Property Name="saleAge" Type="Int32" />
+          <Property Name="saleСonstantСlient" Type="Int32" />
+          <Property Name="totalCost" Type="Single" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_SeasonTicket_Client" FromRole="SeasonTicket" ToRole="Client" />
+          <NavigationProperty Name="Coach" Relationship="Self.FK_SeasonTicket_Coach" FromRole="SeasonTicket" ToRole="Coach" />
+          <NavigationProperty Name="Service" Relationship="Self.FK_SeasonTicket_Service" FromRole="SeasonTicket" ToRole="Service" />
+          <NavigationProperty Name="Visitings" Relationship="Self.FK_Visiting_SeasonTicket" FromRole="SeasonTicket" ToRole="Visiting" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="idService" />
+          </Key>
+          <Property Name="idService" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cost" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Activities" Relationship="Self.FK_Record_Service" FromRole="Service" ToRole="Activity" />
+          <NavigationProperty Name="SeasonTickets" Relationship="Self.FK_SeasonTicket_Service" FromRole="Service" ToRole="SeasonTicket" />
+        </EntityType>
+        <EntityType Name="Visiting">
+          <Key>
+            <PropertyRef Name="idVisiting" />
+          </Key>
+          <Property Name="idVisiting" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idSeasonTicket" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="SeasonTicket" Relationship="Self.FK_Visiting_SeasonTicket" FromRole="Visiting" ToRole="SeasonTicket" />
+        </EntityType>
+        <Association Name="FK_Record_Coach">
+          <End Role="Coach" Type="Self.Coach" Multiplicity="1" />
+          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coach">
+              <PropertyRef Name="idCoach" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="idCoach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="idService" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="idService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeasonTicket_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="SeasonTicket" Type="Self.SeasonTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="idClient" />
+            </Principal>
+            <Dependent Role="SeasonTicket">
+              <PropertyRef Name="idClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeasonTicket_Coach">
+          <End Role="Coach" Type="Self.Coach" Multiplicity="0..1" />
+          <End Role="SeasonTicket" Type="Self.SeasonTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coach">
+              <PropertyRef Name="idCoach" />
+            </Principal>
+            <Dependent Role="SeasonTicket">
+              <PropertyRef Name="idCoach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeasonTicket_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="SeasonTicket" Type="Self.SeasonTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="idService" />
+            </Principal>
+            <Dependent Role="SeasonTicket">
+              <PropertyRef Name="idService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visiting_SeasonTicket">
+          <End Role="SeasonTicket" Type="Self.SeasonTicket" Multiplicity="1" />
+          <End Role="Visiting" Type="Self.Visiting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SeasonTicket">
+              <PropertyRef Name="idSeasonTicket" />
+            </Principal>
+            <Dependent Role="Visiting">
+              <PropertyRef Name="idSeasonTicket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FitnessClubEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activities" EntityType="Self.Activity" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Coaches" EntityType="Self.Coach" />
+          <EntitySet Name="SeasonTickets" EntityType="Self.SeasonTicket" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <EntitySet Name="Visitings" EntityType="Self.Visiting" />
+          <AssociationSet Name="FK_Record_Coach" Association="Self.FK_Record_Coach">
+            <End Role="Coach" EntitySet="Coaches" />
+            <End Role="Activity" EntitySet="Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Service" Association="Self.FK_Record_Service">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="Activity" EntitySet="Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeasonTicket_Client" Association="Self.FK_SeasonTicket_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="SeasonTicket" EntitySet="SeasonTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeasonTicket_Coach" Association="Self.FK_SeasonTicket_Coach">
+            <End Role="Coach" EntitySet="Coaches" />
+            <End Role="SeasonTicket" EntitySet="SeasonTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeasonTicket_Service" Association="Self.FK_SeasonTicket_Service">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="SeasonTicket" EntitySet="SeasonTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visiting_SeasonTicket" Association="Self.FK_Visiting_SeasonTicket">
+            <End Role="SeasonTicket" EntitySet="SeasonTickets" />
+            <End Role="Visiting" EntitySet="Visitings" />
+          </AssociationSet>
+          <FunctionImport Name="ClientInfo" ReturnType="Collection(FitnessClubModel.ClientInfo_Result)">
+            <Parameter Name="Client" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(FitnessClubModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(FitnessClubModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="Trainer" ReturnType="Collection(FitnessClubModel.Trainer_Result)">
+            <Parameter Name="Coach" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="ClientInfo_Result">
+          <Property Type="Int32" Name="idClient" Nullable="false" />
+          <Property Type="String" Name="Скидка_по_возрасту" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="Скидка_по_кол_ву_занятий" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="Скидка_постоянному_клиенту" Nullable="false" MaxLength="4" />
+          <Property Type="Int32" Name="Количество_абонементов" Nullable="true" />
+          <Property Type="Int32" Name="Количество_посещений" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Trainer_Result">
+          <Property Type="String" Name="Тренер" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="Стаж" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Количество_клиентов" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Услуги" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище FitnessClubModelContainer" CdmEntityContainer="FitnessClubEntity">
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="FitnessClubModel.Activity">
+              <MappingFragment StoreEntitySet="Activity">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idCoach" ColumnName="idCoach" />
+                <ScalarProperty Name="idService" ColumnName="idService" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="FitnessClubModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="totalVisiting" ColumnName="totalVisiting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Coaches">
+            <EntityTypeMapping TypeName="FitnessClubModel.Coach">
+              <MappingFragment StoreEntitySet="Coach">
+                <ScalarProperty Name="idCoach" ColumnName="idCoach" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="experience" ColumnName="experience" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeasonTickets">
+            <EntityTypeMapping TypeName="FitnessClubModel.SeasonTicket">
+              <MappingFragment StoreEntitySet="SeasonTicket">
+                <ScalarProperty Name="idSeasonTicket" ColumnName="idSeasonTicket" />
+                <ScalarProperty Name="idService" ColumnName="idService" />
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="idCoach" ColumnName="idCoach" />
+                <ScalarProperty Name="classesTotal" ColumnName="classesTotal" />
+                <ScalarProperty Name="classesLeft" ColumnName="classesLeft" />
+                <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+                <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+                <ScalarProperty Name="saleClasses" ColumnName="saleClasses" />
+                <ScalarProperty Name="saleAge" ColumnName="saleAge" />
+                <ScalarProperty Name="saleСonstantСlient" ColumnName="saleСonstantСlient" />
+                <ScalarProperty Name="totalCost" ColumnName="totalCost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="FitnessClubModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="idService" ColumnName="idService" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visitings">
+            <EntityTypeMapping TypeName="FitnessClubModel.Visiting">
+              <MappingFragment StoreEntitySet="Visiting">
+                <ScalarProperty Name="idVisiting" ColumnName="idVisiting" />
+                <ScalarProperty Name="idSeasonTicket" ColumnName="idSeasonTicket" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ClientInfo" FunctionName="Хранилище FitnessClubModel.ClientInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FitnessClubModel.ClientInfo_Result">
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="Скидка_по_возрасту" ColumnName="Скидка по возрасту" />
+                <ScalarProperty Name="Скидка_по_кол_ву_занятий" ColumnName="Скидка по кол-ву занятий" />
+                <ScalarProperty Name="Скидка_постоянному_клиенту" ColumnName="Скидка постоянному клиенту" />
+                <ScalarProperty Name="Количество_абонементов" ColumnName="Количество абонементов" />
+                <ScalarProperty Name="Количество_посещений" ColumnName="Количество посещений" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище FitnessClubModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище FitnessClubModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище FitnessClubModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище FitnessClubModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FitnessClubModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище FitnessClubModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FitnessClubModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище FitnessClubModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище FitnessClubModel.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="Trainer" FunctionName="Хранилище FitnessClubModel.Trainer">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FitnessClubModel.Trainer_Result">
+                <ScalarProperty Name="Тренер" ColumnName="Тренер" />
+                <ScalarProperty Name="Стаж" ColumnName="Стаж" />
+                <ScalarProperty Name="Количество_клиентов" ColumnName="Количество клиентов" />
+                <ScalarProperty Name="Услуги" ColumnName="Услуги" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

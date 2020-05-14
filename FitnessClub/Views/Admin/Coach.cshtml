@@ -1,0 +1,54 @@
+﻿@model IEnumerable<FitnessClub.Models.Coach>
+@{
+    ViewBag.Title = "Coach";
+}
+
+<h2>Тренеры</h2>
+
+<div class="container">
+    <table class="table table-hover">
+        <tr>
+            <td>
+                <h5><b>Имя</b></h5>
+            </td>
+            <td>
+                <h5><b>@Html.ActionLink("Фамилия", "Coach", new { sort = ViewBag.NameSortParm })</b></h5>
+            </td>
+            <td>
+                <h5><b>@Html.ActionLink("Опыт", "Coach", new { sort = ViewBag.ExperienceSortParm })</b></h5>
+            </td>
+            <td>
+                <h5><b>@Html.ActionLink("Статистика", "CoachGraphic", new { })</b></h5>
+            </td>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            <li>@Html.DisplayFor(modelItem => item.name)</li>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.experience)
+        </td>
+
+        <td>
+            <a href="/Admin/EditCoach/@item.idCoach" class="col-sm-offset-0">
+                <img src="@Url.Content("~/Content/edit1.png") " width="30px" alt="image">
+            </a>
+            <a href="/Admin/ShowCoach/@item.idCoach" class="col-sm-offset-0">
+                <img src="@Url.Content("~/Content/detail1.png") " width="30px" alt="image">
+            </a>
+        </td>
+    </tr>
+        }
+    </table>
+</div>
+<p>
+    <a href="/Admin/CreateCoach" class="col-sm-offset-0">
+        <img src="@Url.Content("~/Content/add1.png") " width="50px" alt="image">
+    </a>
+</p>

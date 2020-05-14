@@ -1,0 +1,90 @@
+﻿@model FitnessClub.Models.SeasonTicket
+
+@{
+    ViewBag.Title = "ShowSeasonTicket";
+}
+
+    <div class="container">
+        <h3>Абонемент</h3>
+        <hr />
+        <div class="see">
+            <div class="col-md-2">
+                <b>Владелец</b>
+            </div>
+
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.Client.name)  @Html.DisplayFor(model => model.Client.surname)
+            </div>
+        </div>
+
+        <div class="see">
+            <div class="col-md-2">
+                <b>Услуга</b>
+            </div>
+
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.Service.name)
+            </div>
+        </div>
+
+        <div class="see">
+            <div class="col-md-2">
+                <b>Тренер</b>
+            </div>
+
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.Coach.name)   @Html.DisplayFor(model => model.Coach.surname)
+            </div>
+        </div>
+
+        <div class="see">
+            <div class="col-md-2">
+                <b>Дата начала</b>
+            </div>
+
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.dateStart.Year)
+                @Html.DisplayFor(model => model.dateStart.Month)
+                @Html.DisplayFor(model => model.dateStart.Day)
+            </div>
+        </div>
+
+        <div class="see">
+            <div class="col-md-2">
+                <b>Дата окончания</b>
+            </div>
+
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.dateEnd.Year)
+                @Html.DisplayFor(model => model.dateEnd.Month)
+                @Html.DisplayFor(model => model.dateEnd.Day)
+            </div>
+        </div>
+
+        <div class="see">
+            <div class="col-md-2">
+                <b>Посещения</b>
+            </div>
+            <div class="col-md-10">
+                @foreach (var item in Model.Visitings)
+                {
+
+                    <li>
+                        @Html.DisplayFor(model => item.date.Year)
+                        @Html.DisplayFor(model => item.date.Month)
+                        @Html.DisplayFor(model => item.date.Day)
+                    </li>
+
+                }
+            </div>
+        </div>
+    </div>
+    <p style="margin-top:2%">
+
+        <a href="/Admin/EditSeasonTicket/@Model.idSeasonTicket" class="col-sm-offset-0" style="margin-right:2%; margin-left:3%;">
+            <img src="@Url.Content("~/Content/edit1.png") " width="30px" alt="image">
+        </a>
+        <a href="/Admin/SeasonTicket" class="col-sm-offset-0">
+            <img src="@Url.Content("~/Content/back1.jpg") " width="35px" alt="image">
+        </a>
+    </p>

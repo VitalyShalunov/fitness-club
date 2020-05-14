@@ -1,0 +1,70 @@
+﻿@model FitnessClub.Models.Coach
+
+@{
+    ViewBag.Title = "ShowCoach";
+}
+
+
+@*<h2>ShowCoach</h2>*@
+
+<div>
+    <h3>Тренер</h3>
+    <hr />
+    @*<dl class="dl-horizontal">*@
+<div class="container">
+    <div class="see">
+        <div class="col-md-2">
+            <b>Имя</b>
+        </div>
+
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.name)
+        </div>
+    </div>
+
+    <div class="see">
+        <div class="col-md-2">
+            <b>Фамилия</b>
+        </div>
+
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.surname)
+        </div>
+    </div>
+
+    <div class="see">
+        <div class="col-md-2">
+            <b>Опыт работы</b>
+        </div>
+
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.experience)
+        </div>
+    </div>
+
+    <div class="see">
+        <div class="col-md-2">
+            <b>Деятельность</b>
+        </div>
+        <div class="col-md-10">
+            @foreach (var item in Model.listActivities)
+            {
+
+                <li>@Html.DisplayFor(model => item)</li>
+
+            }
+        </div>
+    </div>
+    </div>
+<p>
+    @*@Html.ActionLink("Редактировать", "EditCoach", new { id = item.idCoach })*@
+    @*<div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Редактировать" class="btn btn-default" />
+        </div>*@
+    <a href="/Admin/EditCoach/@Model.idCoach" class="col-sm-offset-0" style="margin-right:2%; margin-left:3%;">
+        <img src="@Url.Content("~/Content/edit1.png") " width="30px" alt="image">
+    </a>
+    <a href="/Admin/Coach" class="col-sm-offset-0">
+        <img src="@Url.Content("~/Content/back1.jpg") " width="35px" alt="image">
+    </a>
+</p>

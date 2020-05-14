@@ -1,0 +1,77 @@
+﻿@model FitnessClub.Models.Client
+
+@{
+    ViewBag.Title = "EditClient";
+}
+
+<h2>Редактирование клиента</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            Имя
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            Фамилия
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.surname, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.surname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            Пол
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.sex, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.sex, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            Дата рождения
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.birthday.Date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.birthday.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+        <div class="control-label col-md-2">
+            Количество посещений
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.totalVisiting, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.totalVisiting, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Сохранить" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    <a href="/Admin/Client" class="col-sm-offset-0">
+        <img src="@Url.Content("~/Content/back1.jpg") " width="35px" alt="image">
+    </a>
+</div>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<FitnessClub.Models.Service>
+@{
+    ViewBag.Title = "Service";
+}
+
+<h2>Услуги</h2>
+
+<div class="container-fluid">
+    <table class="table table-hover">
+        <tr>
+            <td>
+                <h5><b>Название</b></h5>
+            </td>
+            <td>
+                <h5><b>@Html.ActionLink("Стоимость", "Service", new { sort = ViewBag.CostSortParm })</b></h5>
+            </td>
+        </tr>
+
+
+
+        @*<div class="container">
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6">
+                            @Html.DisplayFor(modelItem => item.name)
+                        </div>
+                        <div class="col-xs-6 col-sm-6">
+                            @Html.DisplayFor(modelItem => item.cost)
+                        </div>
+                        <div class="col-xs-push-0 col-sm-0">
+                            @Html.ActionLink("Редактировать", "EditService", new { id = item.idService })
+                        </div>
+                        <hr style="width:1500px" />
+                    </div>
+                }
+            </div>*@
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <li> @Html.DisplayFor(modelItem => item.name)</li>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cost)
+                </td>
+                <td>
+                    <a href="/Admin/EditService/@item.idService" class="col-sm-offset-0">
+                        <img src="@Url.Content("~/Content/edit1.png") " width="30px" alt="image">
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<p>
+    <a href="/Admin/CreateService" class="col-sm-offset-0">
+        <img src="@Url.Content("~/Content/add1.png") " width="50px" alt="image">
+    </a>
+</p>

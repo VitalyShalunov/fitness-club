@@ -1,0 +1,123 @@
+﻿@model FitnessClub.Models.SeasonTicket
+
+@{
+    ViewBag.Title = "CreateSeasonTicket";
+}
+
+<h2>Создание абонемента</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.idSeasonTicket, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.idSeasonTicket, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.idSeasonTicket, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Услуга</b>
+        </div>
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.idService, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.idService, "", new { @class = "text-danger" })*@
+
+            @Html.DropDownListFor(model => model.Service.name, ViewBag.Services as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Service.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Клиент</b>
+        </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Client.surname, ViewBag.Clients as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Client.surname, "", new { @class = "text-danger" })
+            @*@Html.EditorFor(model => model.idClient, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.idClient, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Тренер</b>
+        </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Coach.surname, ViewBag.Coaches as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Coach.surname, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-offset-3">
+            @if (ViewBag.ServicesCoach != null)
+            {
+                foreach (var item in ViewBag.ServicesCoach)
+                {
+
+                    <li>
+                        @Html.DisplayFor(model => item)
+                    </li>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Количество занятий</b>
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.classesTotal, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.classesTotal, "", new { @class = "text-danger" })
+            <span asp-validation-for="classesTotal"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Дата начала</b>
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.dateStart, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.dateStart, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Дата окончания</b>
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.dateEnd, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.dateEnd, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.totalCost, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.totalCost, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.totalCost, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Создать" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    <a href="/Admin/SeasonTicket" class="col-sm-offset-0">
+        <img src="@Url.Content("~/Content/back1.jpg") " width="35px" alt="image">
+    </a>
+</div>

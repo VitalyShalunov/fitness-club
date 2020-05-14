@@ -1,0 +1,75 @@
+﻿@model FitnessClub.Models.Client
+
+@{
+    ViewBag.Title = "ShowClient";
+}
+
+<div>
+    <h3>Клиент</h3>
+    <hr />
+    @*<dl class="dl-horizontal">*@
+<div class="container">
+    <div class="see">
+        <div class="col-md-2">
+            <b>Имя</b>
+        </div>
+
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.name)
+        </div>
+    </div>
+
+    <div class="see">
+        <div class="col-md-2">
+            <b>Фамилия</b>
+        </div>
+
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.surname)
+        </div>
+    </div>
+
+    <div class="see">
+        <div class="col-md-2">
+            <b>Пол</b>
+        </div>
+
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.sex)
+        </div>
+    </div>
+
+    <div class="see">
+        <div class="col-md-2">
+            <b>Дата рождения</b>
+        </div>
+
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.birthday.Year)
+            @Html.DisplayFor(model => model.birthday.Month)
+            @Html.DisplayFor(model => model.birthday.Day)
+        </div>
+    </div>
+
+    <div class="see">
+        <div class="col-md-2">
+            <b>Абонементы</b>
+        </div>
+        <div class="col-md-10">
+            @foreach (var item in ViewBag.TicketsClient)
+            {
+
+                <li>@Html.DisplayFor(model => item)</li>
+
+            }
+        </div>
+    </div>
+</div>
+<p>
+    <a href="/Admin/EditClient/@Model.idClient" class="col-sm-offset-0" style="margin-right:2%; margin-left:3%;">
+        <img src="@Url.Content("~/Content/edit1.png") " width="30px" alt="image">
+    </a>
+    <a href="/Admin/Client" class="col-sm-offset-0">
+        <img src="@Url.Content("~/Content/back1.jpg") " width="35px" alt="image">
+    </a>
+</p>

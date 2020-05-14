@@ -1,0 +1,133 @@
+﻿@model FitnessClub.Models.SeasonTicket
+
+@{
+    ViewBag.Title = "EditSeasonTicket";
+}
+
+<h2>Редактирование абонемента</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Услуга</b>
+        </div>
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.idService, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.idService, "", new { @class = "text-danger" })*@
+
+            @Html.DropDownListFor(model => model.Service.name, ViewBag.Services as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Service.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Клиент</b>
+        </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Client.surname, ViewBag.Clients as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Client.surname, "", new { @class = "text-danger" })
+            @*@Html.EditorFor(model => model.idClient, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.idClient, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Тренер</b>
+        </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Coach.surname, ViewBag.Coaches as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Coach.surname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Общее количество занятий</b>
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.classesTotal, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.classesTotal, "", new { @class = "text-danger" })
+          </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Осталось занятий</b>
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.classesLeft, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.classesLeft, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Дата начала</b>
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.dateStart.Date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.dateStart.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Дата окончания</b>
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.dateEnd.Date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.dateEnd.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <b>Посещения</b>
+            <a href="/Admin/AddVisiting/@Model.idSeasonTicket" class="col-sm-offset-0">
+                <img src="@Url.Content("~/Content/add1.png") " width="30px" alt="image">
+            </a>
+        </div>
+        <div class="col-md-10">
+            @for (int i = 0; i < Model.Visitings.Count(); i++)
+            {
+                @Html.EditorFor(model => model.Visitings[i].date.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Visitings[i].date.Date, "", new { @class = "text-danger" })
+                <br />
+
+                @*@Html.DisplayFor(model => item.date.Year)
+                @Html.DisplayFor(model => item.date.Month)
+                @Html.DisplayFor(model => item.date.Day)*@
+            }
+            @*@Html.ActionLink("+ посещение ", "AddVisiting", new { id = Model.idSeasonTicket }, new { @class = "btn btn-default" })*@
+        </div>
+        @*<div class="col-md-6">
+            <a href="/Admin/AddVisiting" class="col-sm-offset-0">
+                <img src="@Url.Content("~/Content/add1.png") " width="50px" alt="image">
+            </a>
+
+        </div>*@
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/Admin/SeasonTicket" class="col-sm-offset-0">
+        <img src="@Url.Content("~/Content/back1.jpg") " width="35px" alt="image">
+    </a>
+    @*@Html.ActionLink("Назад", "SeasonTicket", new { }, new { @class = "btn btn-default" })*@
+</div>
